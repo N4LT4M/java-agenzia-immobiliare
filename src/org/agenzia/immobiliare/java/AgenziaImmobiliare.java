@@ -1,6 +1,8 @@
 package org.agenzia.immobiliare.java;
 
-public class Abitazione extends Immobile {
+import java.util.ArrayList;
+
+public class AgenziaImmobiliare {
     /*
     Si vuole progettare un’applicazione in grado di gestire un’agenzia immobiliare.
 Gli immobili sono caratterizzati da:
@@ -27,22 +29,41 @@ Definire una classe AgenziaImmobiliare che contiene una lista di immobili e pres
 Creare una classe Main con metodo main nel quale testare tutte le funzionalità delle classi
      */
 
-    //attributi
-    private int rooms;
-    private int bathrooms;
-
-    //costruttore
-
-    public Abitazione(String alphanumericCode, String address, int cap, String city, int surfaceAreaSquareMeters, int rooms, int bathrooms) {
-        super(alphanumericCode, address, cap, city, surfaceAreaSquareMeters);
-        this.rooms = rooms;
-        this.bathrooms = bathrooms;
+    //nuova array list che conterrà gli immobili
+    private ArrayList<Immobile> immobileArrayList = new ArrayList<>();
+    //metodo per aggiunere elementi alla lista
+    public void add (Immobile i){
+        immobileArrayList.add(i);
     }
-    //getter e setter
 
-    //metodi
-    @Override
-    public String toString(){
-        return super.toString() + " " + rooms + " " + bathrooms;
+    public ArrayList<Immobile> getImmobileArrayList (){
+        return this.immobileArrayList;
+    }
+
+    //metodo per trovare elementi nella lista basandosi sul codice alfanumerico
+    public Immobile search (String alphanumericCode){
+        for (int i = 0; i < immobileArrayList.size(); i++) {
+            Immobile immobile = immobileArrayList.get(i);
+            if (alphanumericCode.equals(immobile.getAlphanumericCode())){
+                return immobile;
+            }
+
+        } return null;
+    }
+
+    //metodo per restituire immobile con maggior numero di persone interessate
+    public Immobile mostLiked (){
+        if (immobileArrayList.size() == 0){
+            return null;
+        }
+        Immobile bestImmobile = immobileArrayList.get(0);
+        for (int i = 0; i < immobileArrayList.size(); i++) {
+            Immobile likedImmobile = immobileArrayList.get(i);
+            if (bestImmobile.getInterestedPeople() <= likedImmobile.getInterestedPeople()) {
+                bestImmobile = likedImmobile;
+            }
+        }return bestImmobile;
+
+
     }
 }
